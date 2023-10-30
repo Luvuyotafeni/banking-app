@@ -1,0 +1,16 @@
+Deposit: R1000.00
+Withdrawal: R200.00
+Withdrawal: R220.00
+Available Balance: R880.00
+Deposit: R650.00
+Available Balance: R1530.00
+Withdrawal: R200.00
+Available Balance: R1330.00
+Deposit: R600.00
+Available Balance: R1930.00
+Withdrawal: R1930.00
+Available Balance: R0.00
+Deposit: R2000.00
+Available Balance: R2000.00
+Deposit: R20000.00
+Available Balance: R22000.00
