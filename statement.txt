@@ -14,3 +14,7 @@ Deposit: R2000.00
 Available Balance: R2000.00
 Deposit: R20000.00
 Available Balance: R22000.00
+Deposit: R20.00
+Available Balance: R22020.00
+Withdrawal: R500.00
+Available Balance: R21520.00

@@ -70,13 +70,39 @@ def view_balance():
     print("The balance is: R%.2f" % balance)
 
 while True:
-    print("How may we help you? (Type 'done' to exit, 'withdraw' to withdraw, 'deposit' to deposit, 'invest' to invest, 'balance' to view balance)")
+    #with open("bank.txt", 'r'):
+    file_path = 'bank.txt'  # Replace 'example.txt' with the path to your text file
+    try:
+        with open(file_path, 'r') as file:
+            # Read the first line from the file
+            first_line = file.readline()
+
+            # Check if the first line is not empty
+            if first_line:
+                # Split the first line into username and password
+                username, password = first_line.strip().split(maxsplit=1)
+                print("Username:", username)
+                print("Password:", password)
+            else:
+                print("The file is empty.")
+    except FileNotFoundError:
+        print("error")
+        break
+    required_user = input("Enter username: ")
+    required_password = input("Enter password: ")
+
+    if required_user == username and required_password == password:
+        print("Welcome to the program")
+    else:
+        print("Wrong username or password")
+        break
+    print("How may we help you?\n '1' to deposit\n '2' to withdraw\n '3' to view balance\n '4' to invest\n '5' to view statement\n'6' to exit ")
     answer = input().lower()
 
     # Open the statement file in append mode
     with open("statement.txt", "a") as statement_file:
         # Process deposit and withdrawal actions and write to the file
-        if answer == "withdraw":
+        if answer == "2":
             try:
                 withdraw_amount = float(input("How much do you want to withdraw? "))
                 if withdraw_amount <= 0:
@@ -91,7 +117,7 @@ while True:
                     save_balance(balance)  # Save the updated balance to the file
             except ValueError:
                 print("Invalid input. Please enter a valid number.")
-        elif answer == "deposit":
+        elif answer == "1":
             try:
                 deposit_amount = float(input("How much do you want to deposit? "))
                 if deposit_amount <= 0:
@@ -104,9 +130,9 @@ while True:
                     save_balance(balance)  # Save the updated balance to the file
             except ValueError:
                 print("Invalid input. Please enter a valid number.")
-        elif answer == "invest":
+        elif answer == "5":
             calculate_interest()
-        elif answer == "statement":
+        elif answer == "5":
             try:
                 with open("statement.txt", "r") as statement_file:
                     content = statement_file.read()
@@ -115,9 +141,9 @@ while True:
                 print("No statement file found.")
             except Exception as e:
                 print("Error occurred while reading statement file:", str(e))
-        elif answer == "balance":
+        elif answer == "3":
             print("The balance is: R%.2f" % balance)
-        elif answer == "done":
+        elif answer == "6":
             print("Are you sure you want to exit? (yes/no)")
             confirm_exit = input().lower()
             if confirm_exit == "yes":
