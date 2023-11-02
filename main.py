@@ -2,6 +2,7 @@
 
 # Press Shift+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+import random
 def read_balance():
     try:
         with open("bank.txt", "r") as file:
@@ -19,38 +20,23 @@ def read_balance():
     return 0.0
 
 # Read username and password from the file
-file_path = 'bank.txt'  # Replace 'bank.txt' with the path to your credentials file
-try:
-    with open(file_path, 'r') as file:
-        # Read the first line from the file
-        first_line = file.readline()
-
-        # Check if the first line is not empty
-        if first_line:
-            # Split the first line into username and password
-            username, password = first_line.strip().split(maxsplit=1)
-        else:
-            print("The file is empty.")
-            exit()
-except FileNotFoundError:
-    print("Error: Credentials file not found.")
-    exit()
-
-# Ask for username and password
-while True:
-    required_user = input("Enter username: ")
-    required_password = input("Enter password: ")
-
-    # Verify username and password
-    if required_user == username and required_password == password:
-        print("Welcome to the program")
-        break
-    else:
-        print("Wrong username or password. Please try again.")
 
 # Rest of the functions and main loop
 balance = read_balance()
 
+# Function to update the user's transaction history
+# Function to register a new user
+def register_user():
+    name = input("Enter your name: ")
+    password = input("Create a password: ")
+
+    # Generate a random account number
+    account_number = str(random.randint(100000, 999999))
+
+    # Save user information to the bank data file
+    with open('bank.txt', "a") as file:
+        file.write(f"{name},{password},{account_number},0.0\n")  # Initial balance is 0.0
+    print("Registration successful. Your account number is:", account_number)
 
 def save_balance(balance):
     try:
@@ -143,8 +129,56 @@ def calculate_interest():
         except ValueError:
             print("Invalid input. Please enter a valid number.")
 
+import hashlib
+
+def read_user_data(file_name):
+    user_data = {}
+    try:
+        with open(file_name, 'r') as file:
+            lines = file.readlines()
+
+        for line in lines:
+            username, hashed_password = line.strip().split(',')
+            user_data[username] = hashed_password
+    except FileNotFoundError:
+        print(f"Error: File '{file_name}' not found.")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+    return user_data
+
+def login():
+    MAX_LOGIN_ATTEMPTS = 3
+    file_name = 'bank.txt'
+    user_data = read_user_data(file_name)
+
+    attempts = 0
+    while attempts < MAX_LOGIN_ATTEMPTS:
+        username_input = input("Enter your username: ")
+        password_input = input("Enter your password: ")
+
+        # Hash the input password for comparison
+        hashed_password_input = hashlib.sha256(password_input.encode()).hexdigest()
+
+        # Check if the username exists and the password matches the hashed password
+        if username_input in user_data and user_data[username_input] == hashed_password_input:
+            print("Login successful!")
+            break
+        else:
+            print("Incorrect username or password. Please try again.")
+            attempts += 1
+
+    if attempts == MAX_LOGIN_ATTEMPTS:
+        print("Too many login attempts. Your account is locked.")
 
 while True:
+    log = input("Sign In or Sign Up"). lower()
+    if log == "sign in":
+        login()
+    elif log == "sign up":
+        register_user()
+    else:
+        print("wrong input")
+        break
     print(
         "How may we help you?\n '1' to deposit\n '2' to withdraw\n '3' to view balance\n '4' to invest\n '5' to view statement\n '6' to exit ")
     answer = input().lower()
