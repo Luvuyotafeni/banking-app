@@ -1,0 +1,1 @@
+Username: Shaun, Home Loan Result: {'monthly_payment': 1028.6008333333332, 'total_payment': 135775.30999999997, 'total_interest': 134664.30999999997}
