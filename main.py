@@ -2,6 +2,7 @@
 
 # Press Shift+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+import random
 def read_balance():
     try:
         with open("bank.txt", "r") as file:
@@ -126,20 +127,14 @@ def calculate_interest():
     while True:
         try:
             initializer = float(input("How much do you want to invest? "))
-            if initializer <= 0:
-                print("Invalid input. Please enter a valid amount greater than 0.")
-                continue  # Ask for input again if it's less than or equal to 0
-
             months = int(input("For how many months? "))
             percentage = float(input("What is the percentage of the investment? "))
-
             percent = percentage / 100
             interest = initializer * percent * months
             total_output = initializer + interest
             print("Your earned interest is: R%.2f" % interest)
-            print("Total interest is: R%.2f" % total_output)
+            print("total interest is: R%.2f" % total_output)
             break
-
         except ValueError:
             print("Invalid input. Please enter a valid number.")
 
@@ -174,7 +169,6 @@ while True:
             break
     else:
         print("Invalid option. Please try again.")
-
 
 def print_hi(name):
     # Use a breakpoint in the code line below to debug your script.
